@@ -158,6 +158,7 @@ public final class SMTPClient {
         ssl: SMTPSSLMode,
         on eventLoop: EventLoop = MultiThreadedEventLoopGroup(numberOfThreads: 1).next()
     ) async throws -> SMTPClient {
+        print("✉️  conn A001")
         return try await connect(hostname: hostname, port: port, ssl: ssl, eventLoop: eventLoop)
     }
     
@@ -168,6 +169,9 @@ public final class SMTPClient {
         ssl: SMTPSSLMode,
         on eventLoop: EventLoop = MultiThreadedEventLoopGroup(numberOfThreads: 1).next()
     ) async throws -> SMTPClient {
+        
+        print("✉️  conn B001")
+        
         let context = SMTPClientContext(eventLoop: channel.eventLoop)
         
         let lineBasedFrameDecoder = ByteToMessageHandler(LineBasedFrameDecoder())
@@ -224,6 +228,8 @@ public final class SMTPClient {
     ) async throws -> SMTPClient {
         
         let context = SMTPClientContext(eventLoop: eventLoop)
+        
+        print("✉️  conn C001")
         
         print(hostname)
         
