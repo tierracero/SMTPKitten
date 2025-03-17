@@ -222,7 +222,12 @@ public final class SMTPClient {
         ssl: SMTPSSLMode,
         eventLoop: EventLoop
     ) async throws -> SMTPClient {
+        
         let context = SMTPClientContext(eventLoop: eventLoop)
+        
+        print(hostname)
+        
+        print(port)
         
         let channel = try await ClientBootstrap(group: eventLoop).channelInitializer { channel in
             let lineBasedFrameDecoder = ByteToMessageHandler(LineBasedFrameDecoder())
@@ -232,8 +237,10 @@ public final class SMTPClient {
             
             switch ssl {
             case .insecure, .startTLS:
+                print("✉️  conn 001")
                 break
             case let .tls(configuration):
+                print("✉️  conn 002")
                 do {
                     let sslContext = try NIOSSLContext(configuration: configuration.makeTlsConfiguration())
                     let sslHandler = try NIOSSLClientHandler(context: sslContext, serverHostname: hostname)
